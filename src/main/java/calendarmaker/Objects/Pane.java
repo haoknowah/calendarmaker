@@ -66,12 +66,14 @@ public class Pane extends JPanel{
 	public void viewSVG()
 	{
 		File file = findFile();
-		String s = file.toString();
+		String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
 		SVGDocument doc = (SVGDocument) imp.createDocument(s, "svg", null);
+		doc.setDocumentURI(file.toString());
 		JSVGCanvas canvas = new JSVGCanvas();
 		SVGGraphics2D g = new SVGGraphics2D(doc);
-		g.setSVGCanvasSize(new Dimension(180, 50));
+		g.setSVGCanvasSize(new Dimension(720, 120));
+		this.paint(g);
 		Element root = doc.getDocumentElement();
 		g.getRoot(root);
 		JFrame frame = new JFrame();
