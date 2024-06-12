@@ -29,7 +29,10 @@ public class Renderer extends DefaultTableCellRenderer{
 		if(value instanceof LocalDate)
 		{
 			text = FORMATTER.format((LocalDate) value);
-			
+			if(text.substring(0,1).equals("0"))
+			{
+				text = text.substring(1);
+			}
 			withinBounds = calendar.isWithinBounds((LocalDate) value);
 		}
 		Component component = super.getTableCellRendererComponent(table, text, isSelected, hasFocus, row, column);
@@ -41,7 +44,6 @@ public class Renderer extends DefaultTableCellRenderer{
 		{
 			component.setForeground(Color.BLACK);
 		}
-		
 		return component;
 	}
 	protected void paintComponent(Graphics g)

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
 
 @SuppressWarnings("serial")
 public class CalendarTable extends AbstractTableModel{
@@ -13,13 +12,13 @@ public class CalendarTable extends AbstractTableModel{
 	 */
 	private String[] days = 
 		{
-				"Mon",
-				"Tue",
-				"Wed",
-				"Thu",
-				"Fri",
-				"Sat",
-				"Sun"
+				"M",
+				"T",
+				"W",
+				"Th",
+				"F",
+				"Sa",
+				"Su"
 		};
 	private Calendar calendar;
 	public CalendarTable(Calendar calendar)
@@ -57,9 +56,5 @@ public class CalendarTable extends AbstractTableModel{
 	{
 		int offset = (row * 7) + column;
 		return calendar.getDateForDayOffset(offset);
-	}
-	public void setDefaultRenderer(Class<?> column, TableCellRenderer rend)
-	{
-		
 	}
 }

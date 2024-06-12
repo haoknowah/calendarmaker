@@ -1,22 +1,22 @@
 import java.io.IOException;
-import java.time.Month;
 
 import javax.swing.JFrame;
 
 import calendarmaker.Objects.Pane;
+import calendarmaker.Objects.Window;
 
 public class Meow {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		JFrame frame = new JFrame("Test");
-		Pane yub = new Pane(2024, Month.JUNE);
-		frame.add(yub);
+		Window frame = new Window("Calendar");
+		Pane yub = frame.getYub();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setSize(50*7, meow.getColumnModel().getColumn(0).getWidth()*7-25);
 		yub.getSVG();
 		yub.viewSVG();
 	}
-
 }

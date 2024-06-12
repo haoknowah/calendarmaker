@@ -1,14 +1,10 @@
 package calendarmaker.Objects;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.Font;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.time.LocalDate;
 import java.time.Month;
@@ -21,11 +17,9 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import org.apache.batik.anim.dom.SVGDOMImplementation;
-import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.swing.JSVGCanvas;
 import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
@@ -34,7 +28,6 @@ public class Pane extends JPanel{
 	private JTable table;
 	public Pane(int year, Month month)
 	{
-		setLayout(new BorderLayout());
 		Calendar calendar = new Calendar(year, month);
 		table = new JTable(new CalendarTable(calendar))
 				{
@@ -45,8 +38,29 @@ public class Pane extends JPanel{
 						return renderer;
 					}
 				};
+		table.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+		table.getTableHeader().setFont(new Font("Times New Roman", Font.PLAIN, 24));
+		setCellSize(75);
 		table.setDefaultRenderer(LocalDate.class, new Renderer(calendar));
 		add(new JScrollPane(table));
+	}
+	public void setCellSize(int x)
+	{
+		table.getColumnModel().setColumnMargin(0);
+		table.setRowHeight(x);
+		for(int i = 0; i < 7; i++)
+		{
+			table.getColumnModel().getColumn(i).setPreferredWidth(x);
+			table.getColumnModel().getColumn(i).setMaxWidth(x);
+		}
+	}
+	public void paintTable()
+	{
+		DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
+		String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
+		SVGDocument doc = (SVGDocument) imp.createDocument(s, "svg", null);
+		SVGGraphics2D svgGen = new SVGGraphics2D(doc);
+		this.paint(svgGen);
 	}
 	public JTable getJTable()
 	{
@@ -59,13 +73,15 @@ public class Pane extends JPanel{
 		String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		SVGDocument doc = (SVGDocument) imp.createDocument(s, "svg", null);
 		SVGGraphics2D svgGen = new SVGGraphics2D(doc);
-		this.paint(svgGen);
 		Writer out = new FileWriter(svg);
+		this.paint(svgGen);
 		svgGen.stream(out, true);
+		out.close();
 	}
 	public void viewSVG()
 	{
 		File file = findFile();
+		file.deleteOnExit();
 		String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
 		SVGDocument doc = (SVGDocument) imp.createDocument(s, "svg", null);
