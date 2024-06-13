@@ -23,6 +23,7 @@ public class Menu extends JPanel implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField fontSize;
+	private Font[] avai;
 	private JComboBox<String> dropDown;
 	private JComboBox<Boolean> showOut;
 	private JComboBox<Month> month;
@@ -37,7 +38,8 @@ public class Menu extends JPanel implements ActionListener{
 		year = new JTextField(4);
 		this.setLayout(new GridBagLayout());
 		fontSize = new JTextField(2);
-		Font[] avai = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+		fontSize.setText("12");
+		avai = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 		String[] fonts = new String[avai.length];
 		for(int i = 0; i < avai.length; i++)
 		{
@@ -84,12 +86,60 @@ public class Menu extends JPanel implements ActionListener{
 		if(s.equalsIgnoreCase("enter"))
 		{
 			System.out.println("yub");
+			enter();
+		}
+	}
+	public void enter()
+	{
+		try
+		{
+			int year = Integer.parseInt(this.year.getText());
+			Month month = (Month) this.month.getSelectedItem();
+			int fontSize = Integer.parseInt(this.fontSize.getText());
+			Font sel = avai[this.dropDown.getSelectedIndex()];
+			Font font = new Font(sel.getFontName(), sel.getStyle(), fontSize);
 			JFrame f = new JFrame("yub");
-			Pane yub = new Pane(2024, Month.JUNE);
+			Pane yub = new Pane(year, month);
+			yub.getJTable().setFont(font);
 			f.add(yub);
 			f.pack();
 			f.setLocationRelativeTo(null);
 			f.setVisible(true);
 		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public Pane getPane()
+	{
+		try
+		{
+			int year = Integer.parseInt(this.year.getText());
+			Month month = (Month) this.month.getSelectedItem();
+			int fontSize = Integer.parseInt(this.fontSize.getText());
+			Font sel = avai[this.dropDown.getSelectedIndex()];
+			Font font = new Font(sel.getFontName(), sel.getStyle(), fontSize);
+			Pane yub = new Pane(year, month);
+			yub.getJTable().setFont(font);
+			return yub;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public JComboBox<Month> getMonth() {
+		return month;
+	}
+	public void setMonth(JComboBox<Month> month) {
+		this.month = month;
+	}
+	public JTextField getYear() {
+		return year;
+	}
+	public void setYear(JTextField year) {
+		this.year = year;
 	}
 }

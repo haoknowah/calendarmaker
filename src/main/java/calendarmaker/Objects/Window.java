@@ -2,12 +2,14 @@ package calendarmaker.Objects;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.Month;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import org.apache.batik.swing.JSVGCanvas;
 
 public class Window extends JFrame implements ActionListener{
 
@@ -23,9 +25,7 @@ public class Window extends JFrame implements ActionListener{
 		setTitle(title);
 		win = new JPanel();
 		win.setLayout(new BoxLayout(win, BoxLayout.Y_AXIS));
-		this.yub = new Pane(2024, Month.JUNE);
 		this.menu = new Menu();
-		win.add(this.yub);
 		win.add(this.menu);
 		JButton save = new JButton("Save");
 		save.addActionListener(this);
@@ -39,6 +39,26 @@ public class Window extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String s = e.getActionCommand();
+		switch(s)
+		{
+		case "Save":
+			try
+			{
+				JFrame f = new JFrame();
+				Pane yub = this.menu.getPane();
+				/*
+				f.add(yub);
+				f.pack();
+				f.setVisible(true);
+				f.setLocationRelativeTo(null);
+				*/
+				JSVGCanvas canvas = new JSVGCanvas();
+				yub.getSVG();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 	public Pane getYub()
 	{

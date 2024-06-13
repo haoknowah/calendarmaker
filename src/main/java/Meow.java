@@ -10,13 +10,10 @@ public class Meow {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		Window frame = new Window("Calendar");
-		Pane yub = frame.getYub();
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setSize(50*7, meow.getColumnModel().getColumn(0).getWidth()*7-25);
-		yub.getSVG();
-		yub.viewSVG();
 	}
 }
