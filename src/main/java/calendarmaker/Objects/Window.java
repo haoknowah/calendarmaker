@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.apache.batik.swing.JSVGCanvas;
 
 public class Window extends JFrame implements ActionListener{
 
@@ -37,7 +36,6 @@ public class Window extends JFrame implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		String s = e.getActionCommand();
 		switch(s)
 		{
@@ -46,16 +44,25 @@ public class Window extends JFrame implements ActionListener{
 			{
 				JFrame f = new JFrame();
 				Pane yub = this.menu.getPane();
-				/*
+				
 				f.add(yub);
 				f.pack();
 				f.setVisible(true);
 				f.setLocationRelativeTo(null);
-				*/
-				JSVGCanvas canvas = new JSVGCanvas();
 				yub.getSVG();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			break;
+		case "Load":
+			try
+			{
+				Pane yub = this.menu.getPane();
+				yub.viewSVG();
+			}
+			catch(Exception e1)
+			{
 				e1.printStackTrace();
 			}
 		}

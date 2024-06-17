@@ -17,15 +17,22 @@ public class Renderer extends DefaultTableCellRenderer{
 	private static final long serialVersionUID = 1L;
 	public static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd");
 	private Calendar calendar;
-	public Renderer(Calendar calendar)
+	private boolean showOut;
+	private boolean circle;
+	private boolean withinBounds;
+	private Color color;
+	public Renderer(Calendar calendar, boolean showOut, boolean circle, Color color)
 	{
 		this.calendar = calendar;
+		this.showOut = showOut;
+		this.circle = circle;
+		this.color = color;
 		setHorizontalAlignment(JLabel.CENTER);
 	}
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
 		String text = "---";
-		boolean withinBounds = false;
+		withinBounds = false;
 		if(value instanceof LocalDate)
 		{
 			text = FORMATTER.format((LocalDate) value);
@@ -38,18 +45,29 @@ public class Renderer extends DefaultTableCellRenderer{
 		Component component = super.getTableCellRendererComponent(table, text, isSelected, hasFocus, row, column);
 		if(!withinBounds)
 		{
-			component.setForeground(Color.LIGHT_GRAY);
+			if(showOut)
+			{
+				component.setForeground(Color.LIGHT_GRAY);
+			}
+			else
+			{
+				text = "";
+				component = super.getTableCellRendererComponent(table, text, isSelected, hasFocus, row, column);				
+			}
 		}
 		else
 		{
-			component.setForeground(Color.BLACK);
+			component.setForeground(color);
 		}
 		return component;
 	}
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		g.drawOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+		if(circle && (withinBounds || showOut))
+		{
+			g.drawOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+		}
 	}
 	
 }

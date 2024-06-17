@@ -2,7 +2,6 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import calendarmaker.Objects.Pane;
 import calendarmaker.Objects.Window;
 
 public class Meow {

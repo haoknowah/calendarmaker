@@ -1,7 +1,7 @@
 package calendarmaker.Objects;
 
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,11 +9,13 @@ import java.io.Writer;
 import java.time.LocalDate;
 import java.time.Month;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellRenderer;
 
 import org.apache.batik.anim.dom.SVGDOMImplementation;
@@ -26,7 +28,8 @@ import org.w3c.dom.svg.SVGDocument;
 @SuppressWarnings("serial")
 public class Pane extends JPanel{
 	private JTable table;
-	public Pane(int year, Month month)
+	private JScrollPane tendo;
+	public Pane(int year, Month month, boolean showOut, boolean circle, Color color)
 	{
 		Calendar calendar = new Calendar(year, month);
 		table = new JTable(new CalendarTable(calendar))
@@ -38,11 +41,13 @@ public class Pane extends JPanel{
 						return renderer;
 					}
 				};
-		table.setFont(new Font("Times New Roman", Font.PLAIN, 24));
-		table.getTableHeader().setFont(new Font("Times New Roman", Font.PLAIN, 24));
-		setCellSize(75);
-		table.setDefaultRenderer(LocalDate.class, new Renderer(calendar));
-		add(new JScrollPane(table));
+		table.setDefaultRenderer(LocalDate.class, new Renderer(calendar, showOut, circle, color));
+		TitledBorder bord = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), month.toString(),
+				TitledBorder.TOP, TitledBorder.CENTER);
+		this.setBorder(bord);
+		tendo = new JScrollPane(table);
+		add(tendo);
+		//add(table); works except doesn't show header
 	}
 	public void setCellSize(int x)
 	{
@@ -51,8 +56,10 @@ public class Pane extends JPanel{
 		for(int i = 0; i < 7; i++)
 		{
 			table.getColumnModel().getColumn(i).setPreferredWidth(x);
+			table.getColumnModel().getColumn(i).setMinWidth(2);
 			table.getColumnModel().getColumn(i).setMaxWidth(x);
 		}
+		tendo.setPreferredSize(new Dimension(x*7, x*table.getRowCount()+table.getTableHeader().getPreferredSize().height+3));
 	}
 	public void paintTable()
 	{
@@ -68,6 +75,7 @@ public class Pane extends JPanel{
 	}
 	public void getSVG() throws IOException
 	{
+		//implement save naming
 		DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
 		String svg = System.getProperty("user.dir") + "/tst.svg";
 		String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
@@ -81,7 +89,6 @@ public class Pane extends JPanel{
 	public void viewSVG()
 	{
 		File file = findFile();
-		file.deleteOnExit();
 		String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
 		SVGDocument doc = (SVGDocument) imp.createDocument(s, "svg", null);
@@ -89,10 +96,10 @@ public class Pane extends JPanel{
 		JSVGCanvas canvas = new JSVGCanvas();
 		SVGGraphics2D g = new SVGGraphics2D(doc);
 		g.setSVGCanvasSize(new Dimension(720, 120));
-		this.paint(g);
 		Element root = doc.getDocumentElement();
 		g.getRoot(root);
 		JFrame frame = new JFrame();
+		this.paint(g);
 		frame.getContentPane().add(canvas);
 		canvas.setSVGDocument(doc);
 		frame.pack();
