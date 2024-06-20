@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.apache.batik.svggen.SVGGraphics2D;
+
 
 public class Window extends JFrame implements ActionListener{
 
@@ -51,7 +53,6 @@ public class Window extends JFrame implements ActionListener{
 				f.setLocationRelativeTo(null);
 				yub.getSVG();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			break;
@@ -59,7 +60,8 @@ public class Window extends JFrame implements ActionListener{
 			try
 			{
 				Pane yub = this.menu.getPane();
-				yub.viewSVG();
+				SVGGraphics2D g = Pane.viewSVG();
+				yub.paint(g);
 			}
 			catch(Exception e1)
 			{

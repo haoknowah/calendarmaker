@@ -2,12 +2,22 @@ package calendarmaker.Objects;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.io.Writer;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
@@ -18,10 +28,19 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellRenderer;
 
+import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
+import org.apache.batik.svggen.GenericImageHandler;
+import org.apache.batik.svggen.ImageHandler;
+import org.apache.batik.svggen.ImageHandlerPNGEncoder;
+import org.apache.batik.svggen.SVGGeneratorContext;
 import org.apache.batik.svggen.SVGGraphics2D;
+import org.apache.batik.svggen.SVGGraphics2DIOException;
 import org.apache.batik.swing.JSVGCanvas;
+import org.apache.batik.util.XMLResourceDescriptor;
+import org.apache.xmlgraphics.io.Resource;
 import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
@@ -81,29 +100,39 @@ public class Pane extends JPanel{
 		String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		SVGDocument doc = (SVGDocument) imp.createDocument(s, "svg", null);
 		SVGGraphics2D svgGen = new SVGGraphics2D(doc);
-		Writer out = new FileWriter(svg);
+		String ss = findFile().getAbsolutePath();
+		Writer out = new FileWriter(ss);
+		System.out.println(ss);
 		this.paint(svgGen);
 		svgGen.stream(out, true);
 		out.close();
 	}
-	public void viewSVG()
+	public static SVGGraphics2D viewSVG()
 	{
 		File file = findFile();
-		String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
-		SVGDocument doc = (SVGDocument) imp.createDocument(s, "svg", null);
-		doc.setDocumentURI(file.toString());
+		SAXSVGDocumentFactory fact = new SAXSVGDocumentFactory(XMLResourceDescriptor.getXMLParserClassName());
 		JSVGCanvas canvas = new JSVGCanvas();
-		SVGGraphics2D g = new SVGGraphics2D(doc);
-		g.setSVGCanvasSize(new Dimension(720, 120));
+		SVGDocument doc = null;
+		SVGGraphics2D g = null;
+		try {
+			doc = fact.createSVGDocument(file.toURI().toString());
+			g = new SVGGraphics2D(doc);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			doc = (SVGDocument) imp.createDocument(file.getAbsolutePath(), "svg", null);
+			e1.printStackTrace();
+		}
+		g.setSVGCanvasSize(new Dimension(1000, 1200));
+		JFrame frame = new JFrame(doc.getLocalName());
 		Element root = doc.getDocumentElement();
 		g.getRoot(root);
-		JFrame frame = new JFrame();
-		this.paint(g);
 		frame.getContentPane().add(canvas);
 		canvas.setSVGDocument(doc);
+		frame.paint(g);
 		frame.pack();
 		frame.setVisible(true);
+		return g;
 	}
 	/*
 	 * @param find = JFileChooser object to allow user to navigate file explorer
@@ -111,11 +140,29 @@ public class Pane extends JPanel{
 	 * @param@return file = file selected by user
 	 * uses JFileChooser to allow user to select a file and then return the file if it is valid or null if it is not
 	 */
-	public File findFile()
+	public static File findFile()
 	{
 		JFileChooser find = new JFileChooser();
 		find.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		int result = find.showOpenDialog(find);
+		if(find.getSelectedFile().exists() == false)
+		{
+			find.approveSelection();
+			try {
+				DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
+				String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
+				SVGDocument doc = (SVGDocument) imp.createDocument(s, "svg", null);
+				SVGGraphics2D svgGen = new SVGGraphics2D(doc);
+				Writer write = new FileWriter(find.getSelectedFile().getPath() + ".svg");
+				svgGen.stream(write, true);
+				write.flush();
+				write.close();
+				find.setSelectedFile(new File(find.getSelectedFile().getPath() + ".svg"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		if(JFileChooser.APPROVE_OPTION == result)
 		{
 			File file = find.getSelectedFile();
