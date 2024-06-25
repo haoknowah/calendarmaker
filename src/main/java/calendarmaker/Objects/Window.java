@@ -1,12 +1,17 @@
 package calendarmaker.Objects;
 
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.apache.batik.svggen.SVGGraphics2D;
@@ -45,14 +50,21 @@ public class Window extends JFrame implements ActionListener{
 			try
 			{
 				JFrame f = new JFrame();
-				Pane yub = this.menu.getPane();
-				
-				f.add(yub);
+				JPanel panel = new JPanel();
+				panel.add(new JLabel("Select file type."));
+				JButton svg = new JButton("SVG");
+				svg.addActionListener(this);
+				svg.addActionListener(c -> {f.dispose();});
+				JButton jpg = new JButton("JPG");
+				jpg.addActionListener(this);
+				jpg.addActionListener(c -> {f.dispose();});
+				panel.add(svg);
+				panel.add(jpg);
+				f.add(panel);
 				f.pack();
-				f.setVisible(true);
 				f.setLocationRelativeTo(null);
-				yub.getSVG();
-			} catch (IOException e1) {
+				f.setVisible(true);
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			break;
@@ -66,6 +78,37 @@ public class Window extends JFrame implements ActionListener{
 			catch(Exception e1)
 			{
 				e1.printStackTrace();
+			}
+			break;
+		case "SVG":
+			try
+			{
+				JFrame f = new JFrame();
+				Pane yub = this.menu.getPane();
+				f.add(yub);
+				f.pack();
+				f.setLocationRelativeTo(null);
+				yub.getSVG();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			break;
+		case "JPG":
+			try
+			{
+				JFrame f = new JFrame();
+				Pane yub = this.menu.getPane();
+				f.add(yub);
+				f.pack();
+				BufferedImage image = new BufferedImage(yub.getWidth(), yub.getHeight(), BufferedImage.TYPE_INT_RGB);
+				Graphics2D gjpg = image.createGraphics();
+				paint(gjpg);
+				File file = yub.findJPGFile();
+				ImageIO.write(image, "jpg", file);
+			}
+			catch(Exception e23)
+			{
+				e23.printStackTrace();
 			}
 		}
 	}
