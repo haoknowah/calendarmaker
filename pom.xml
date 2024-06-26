@@ -8,6 +8,57 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
   </properties>
+  <build>
+  	<plugins>
+  		<plugin>
+	      <artifactId>maven-assembly-plugin</artifactId>
+	      <configuration>
+	        <archive>
+	          <manifest>
+	            <mainClass>Meow</mainClass>
+	          </manifest>
+	        </archive>
+	      	<descriptorRefs>
+		      <descriptorRef>jar-with-dependencies</descriptorRef>
+		    </descriptorRefs>
+		    <finalName>calendarmaker-0.0.1-SNAPSHOT</finalName>
+	      </configuration>
+	      <executions>
+	      	<execution>
+	      		<id>make-assembly</id>
+	      		<phase>package</phase>
+	      		<goals>
+	      			<goal>single</goal>
+	      		</goals>
+	      	</execution>
+	      </executions>
+	    </plugin>
+  		<plugin>
+		    <groupId>sh.tak.appbundler</groupId>
+		    <artifactId>appbundle-maven-plugin</artifactId>
+		    <version>1.2.0</version>
+		    <configuration>
+		        <mainClass>Meow</mainClass>
+		        <generateDiskImageFile>true</generateDiskImageFile>
+		    </configuration>
+		    <executions>
+		        <execution>
+		            <phase>package</phase>
+		            <goals>
+		                <goal>bundle</goal>
+		            </goals>
+		        </execution>
+		    </executions>
+		</plugin>
+		<plugin>
+		    <artifactId>maven-jar-plugin</artifactId>
+		    <version>3.0.2</version>
+		    <executions>
+		        
+		    </executions>
+		</plugin>
+  	</plugins>
+  </build>
   <dependencies>
   	<!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-util -->
 	<dependency>
@@ -33,6 +84,5 @@
 	    <artifactId>batik-swing</artifactId>
 	    <version>1.17</version>
 	</dependency>
-  	
   </dependencies>
 </project>
