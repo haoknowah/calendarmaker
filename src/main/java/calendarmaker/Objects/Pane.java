@@ -35,7 +35,7 @@ import org.w3c.dom.svg.SVGDocument;
 public class Pane extends JPanel{
 	private JTable table;
 	private JScrollPane tendo;
-	public Pane(int year, Month month, boolean showOut, boolean circle, Color color)
+	public Pane(int year, Month month, boolean showOut, boolean circle, Color color, boolean grid)
 	{
 		Calendar calendar = new Calendar(year, month);
 		table = new JTable(new CalendarTable(calendar))
@@ -51,6 +51,7 @@ public class Pane extends JPanel{
 		TitledBorder bord = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), month.toString(),
 				TitledBorder.TOP, TitledBorder.CENTER);
 		this.setBorder(bord);
+		table.setShowGrid(grid);
 		tendo = new JScrollPane(table);
 		add(tendo);
 		//add(table); works except doesn't show header

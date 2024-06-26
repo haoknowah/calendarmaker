@@ -12,6 +12,5 @@ public class Meow {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setSize(50*7, meow.getColumnModel().getColumn(0).getWidth()*7-25);
 	}
 }

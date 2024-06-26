@@ -33,6 +33,7 @@ public class Menu extends JPanel implements ActionListener{
 	private JComboBox<Month> month;
 	private JTextField year;
 	private JTextField color;
+	private JComboBox<Boolean> grid;
 	public Menu()
 	{
 		GridBagConstraints con = new GridBagConstraints();
@@ -52,6 +53,7 @@ public class Menu extends JPanel implements ActionListener{
 		}
 		showOut = new JComboBox<>(new Boolean[]{true, false});
 		circle = new JComboBox<>(new Boolean[]{true, false});
+		grid = new JComboBox<>(new Boolean[] {true, false});
 		dropDown = new JComboBox<>(fonts);
 		color = new JTextField(12);
 		color.setText("BLACK");
@@ -88,6 +90,11 @@ public class Menu extends JPanel implements ActionListener{
 		add(new JLabel("Color"), con);
 		con.gridy = 7;
 		con.gridx = 0;
+		add(new JLabel("Show Grid"), con);
+		con.gridx = 1;
+		add(grid, con);
+		con.gridx = 0;
+		con.gridy = 8;
 		con.gridwidth = 2;
 		add(enter, con);
 	}
@@ -111,7 +118,6 @@ public class Menu extends JPanel implements ActionListener{
 			JTable table = yub.getJTable();
 			table.setFont(font);
 			TitledBorder bord = (TitledBorder) yub.getBorder();
-			System.out.println(table.getForeground());
 			bord.setTitleFont(font);
 			bord.setTitleColor((Color) Color.class.getField(color.getText()).get(null));
 			yub.setBorder(bord);
@@ -143,7 +149,7 @@ public class Menu extends JPanel implements ActionListener{
 			Font sel = avai[this.dropDown.getSelectedIndex()];
 			Font font = new Font(sel.getFontName(), sel.getStyle(), fontSize);
 			Pane yub = new Pane(year, month, (boolean) this.showOut.getSelectedItem(), (boolean) this.circle.getSelectedItem(),
-					(Color) Color.class.getField(color.getText()).get(null));
+					(Color) Color.class.getField(color.getText()).get(null), (boolean) this.grid.getSelectedItem());
 			yub.setFont(font);
 			yub.getJTable().getTableHeader().setFont(new Font(font.getFontName(), font.getStyle(), fontSize-2));
 			yub.getJTable().getTableHeader().setForeground((Color) Color.class.getField(color.getText()).get(null));
