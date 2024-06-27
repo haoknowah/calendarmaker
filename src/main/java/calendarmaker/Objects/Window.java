@@ -72,7 +72,7 @@ public class Window extends JFrame implements ActionListener{
 			try
 			{
 				Pane yub = this.menu.getPane();
-				SVGGraphics2D g = Pane.viewSVG();
+				Graphics2D g = Pane.viewSVG();
 				yub.paint(g);
 			}
 			catch(Exception e1)
@@ -100,9 +100,10 @@ public class Window extends JFrame implements ActionListener{
 				Pane yub = this.menu.getPane();
 				f.add(yub);
 				f.pack();
+				f.setLocationRelativeTo(null);
 				BufferedImage image = new BufferedImage(yub.getWidth(), yub.getHeight(), BufferedImage.TYPE_INT_RGB);
 				Graphics2D gjpg = image.createGraphics();
-				paint(gjpg);
+				yub.paint(gjpg);
 				File file = yub.findJPGFile();
 				ImageIO.write(image, "jpg", file);
 			}

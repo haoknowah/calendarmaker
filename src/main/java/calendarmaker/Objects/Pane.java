@@ -96,35 +96,49 @@ public class Pane extends JPanel{
 	{
 		BufferedImage image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics2D gjpg = image.createGraphics();
-		paint(gjpg);
+		this.paint(gjpg);
 		File file = findJPGFile();
 		ImageIO.write(image, "jpg", file);
 	}
-	public static SVGGraphics2D viewSVG()
+	public static Graphics2D viewSVG() throws IOException
 	{
-		File file = findFile();
-		DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
-		SAXSVGDocumentFactory fact = new SAXSVGDocumentFactory(XMLResourceDescriptor.getXMLParserClassName());
-		JSVGCanvas canvas = new JSVGCanvas();
-		SVGDocument doc = null;
-		SVGGraphics2D g = null;
-		try {
-			doc = fact.createSVGDocument(file.toURI().toString());
-			g = new SVGGraphics2D(doc);
-		} catch (IOException e1) {
-			doc = (SVGDocument) imp.createDocument(file.getAbsolutePath(), "svg", null);
-			e1.printStackTrace();
+		File file = loadFile();
+		if(file.getAbsolutePath().substring(file.getAbsolutePath().length()-4).equals(".svg"))
+		{
+			DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
+			SAXSVGDocumentFactory fact = new SAXSVGDocumentFactory(XMLResourceDescriptor.getXMLParserClassName());
+			JSVGCanvas canvas = new JSVGCanvas();
+			SVGDocument doc = null;
+			SVGGraphics2D g = null;
+			try {
+				doc = fact.createSVGDocument(file.toURI().toString());
+				g = new SVGGraphics2D(doc);
+			} catch (IOException e1) {
+				doc = (SVGDocument) imp.createDocument(file.getAbsolutePath(), "svg", null);
+				e1.printStackTrace();
+			}
+			g.setSVGCanvasSize(new Dimension(1000, 1200));
+			JFrame frame = new JFrame(doc.getLocalName());
+			Element root = doc.getDocumentElement();
+			g.getRoot(root);
+			frame.getContentPane().add(canvas);
+			canvas.setSVGDocument(doc);
+			frame.paint(g);
+			frame.pack();
+			frame.setVisible(true);
+			return g;
 		}
-		g.setSVGCanvasSize(new Dimension(1000, 1200));
-		JFrame frame = new JFrame(doc.getLocalName());
-		Element root = doc.getDocumentElement();
-		g.getRoot(root);
-		frame.getContentPane().add(canvas);
-		canvas.setSVGDocument(doc);
-		frame.paint(g);
-		frame.pack();
-		frame.setVisible(true);
-		return g;
+		else if(file.getAbsolutePath().substring(file.getAbsolutePath().length() - 4).equals(".png"))
+		{
+			BufferedImage image = ImageIO.read(file);
+			JFrame frame = new JFrame();
+			//create jframe for jpg
+			return (Graphics2D) image.createGraphics();
+		}
+		else
+		{
+			return null;
+		}
 	}
 	/*
 	 * @param find = JFileChooser object to allow user to navigate file explorer
@@ -136,7 +150,7 @@ public class Pane extends JPanel{
 	{
 		JFileChooser find = new JFileChooser();
 		find.setCurrentDirectory(new File(System.getProperty("user.dir")));
-		int result = find.showOpenDialog(find);
+		int result = find.showSaveDialog(find);
 		if(find.getSelectedFile().exists() == false)
 		{
 			find.approveSelection();
@@ -166,6 +180,39 @@ public class Pane extends JPanel{
 	 * uses JFileChooser to allow user to select a file and then return the file if it is valid or null if it is not
 	 */
 	public static File findFile()
+	{
+		JFileChooser find = new JFileChooser();
+		find.setCurrentDirectory(new File(System.getProperty("user.dir")));
+		int result = find.showSaveDialog(find);
+		if(find.getSelectedFile().exists() == false)
+		{
+			find.approveSelection();
+			try {
+				Writer write = new FileWriter(find.getSelectedFile().getPath() + ".svg");
+				write.flush();
+				write.close();
+				find.setSelectedFile(new File(find.getSelectedFile().getPath() + ".svg"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if(JFileChooser.APPROVE_OPTION == result)
+		{
+			File file = find.getSelectedFile();
+			return file;
+		}
+		else
+		{
+			JFrame f = new JFrame("A");
+			JLabel war = new JLabel("File was not selected or could not be loaded.");
+			f.add(war);
+			f.pack();
+			f.setLocationRelativeTo(null);
+			f.setVisible(true);
+			return null;
+		}
+	}
+	public static File loadFile()
 	{
 		JFileChooser find = new JFileChooser();
 		find.setCurrentDirectory(new File(System.getProperty("user.dir")));
