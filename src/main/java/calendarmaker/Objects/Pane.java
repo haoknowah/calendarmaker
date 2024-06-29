@@ -13,6 +13,7 @@ import java.time.Month;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -132,8 +133,8 @@ public class Pane extends JPanel{
 		{
 			BufferedImage image = ImageIO.read(file);
 			JFrame frame = new JFrame();
-			//create jframe for jpg
-			frame.paint(image.getGraphics());
+			JLabel im = new JLabel(new ImageIcon(file.getAbsolutePath()));
+			frame.add(im);
 			frame.pack();
 			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
