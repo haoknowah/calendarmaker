@@ -128,11 +128,15 @@ public class Pane extends JPanel{
 			frame.setVisible(true);
 			return g;
 		}
-		else if(file.getAbsolutePath().substring(file.getAbsolutePath().length() - 4).equals(".png"))
+		else if(file.getAbsolutePath().substring(file.getAbsolutePath().length() - 4).equals(".jpg"))
 		{
 			BufferedImage image = ImageIO.read(file);
 			JFrame frame = new JFrame();
 			//create jframe for jpg
+			frame.paint(image.getGraphics());
+			frame.pack();
+			frame.setLocationRelativeTo(null);
+			frame.setVisible(true);
 			return (Graphics2D) image.createGraphics();
 		}
 		else
