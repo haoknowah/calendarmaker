@@ -91,6 +91,7 @@ public class Pane extends JPanel{
 		Writer out = new FileWriter(ss);
 		this.paint(svgGen);
 		svgGen.stream(out, true);
+		out.flush();
 		out.close();
 	}
 	public void getJPG() throws IOException
