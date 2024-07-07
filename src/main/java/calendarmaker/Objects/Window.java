@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.apache.batik.svggen.SVGGraphics2D;
 
 
 public class Window extends JFrame implements ActionListener{

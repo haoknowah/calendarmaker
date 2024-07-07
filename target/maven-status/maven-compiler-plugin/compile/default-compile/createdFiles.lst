@@ -2,10 +2,10 @@ calendarmaker\Objects\Pane.class
 calendarmaker\Objects\Pane$1.class
 calendarmaker\Objects\Renderer.class
 Meow.class
+calendarmaker\Objects\Menu.class
 calendarmaker\Objects\Panels.class
 calendarmaker\Objects\Days.class
 calendarmaker\Objects\Calendar.class
 calendarmaker\Objects\CalendarTable.class
-calendarmaker\Objects\Menu.class
 calendarmaker\Objects\Window.class
 tst.class
