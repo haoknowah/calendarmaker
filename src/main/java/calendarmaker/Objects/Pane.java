@@ -68,7 +68,7 @@ public class Pane extends JPanel{
 			table.getColumnModel().getColumn(i).setMinWidth(2);
 			table.getColumnModel().getColumn(i).setMaxWidth(x);
 		}
-		tendo.setPreferredSize(new Dimension(x*7, x*table.getRowCount()+table.getTableHeader().getPreferredSize().height+3));
+		tendo.setPreferredSize(new Dimension(x*7, x*table.getRowCount()+table.getTableHeader().getPreferredSize().height+5));
 	}
 	public void paintTable()
 	{
