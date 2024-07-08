@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.time.LocalDate;
@@ -58,7 +57,6 @@ public class Pane extends JPanel{
 		table.setShowGrid(grid);
 		tendo = new JScrollPane(table);
 		add(tendo);
-		//add(table); works except doesn't show header
 	}
 	public void setCellSize(int x)
 	{

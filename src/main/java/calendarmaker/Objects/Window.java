@@ -87,6 +87,7 @@ public class Window extends JFrame implements ActionListener{
 				f.add(yub);
 				f.pack();
 				f.setLocationRelativeTo(null);
+				f.setVisible(true);
 				yub.getSVG();
 			} catch (IOException e1) {
 				e1.printStackTrace();
