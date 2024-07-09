@@ -55,6 +55,10 @@ public class Pane extends JPanel{
 				TitledBorder.TOP, TitledBorder.CENTER);
 		this.setBorder(bord);
 		table.setShowGrid(grid);
+		table.setGridColor(color);
+		TableCellRenderer rend = table.getTableHeader().getDefaultRenderer();
+		JLabel head = (JLabel) rend;
+		head.setHorizontalAlignment(JLabel.CENTER);
 		tendo = new JScrollPane(table);
 		add(tendo);
 	}
