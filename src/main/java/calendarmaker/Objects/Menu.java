@@ -103,7 +103,6 @@ public class Menu extends JPanel implements ActionListener{
 		String s = e.getActionCommand();
 		if(s.equalsIgnoreCase("enter"))
 		{
-			System.out.println("yub");
 			enter();
 		}
 	}
