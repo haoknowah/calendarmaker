@@ -15,7 +15,7 @@
     },
     "dependencies": {
         "command-exists-promise": "^2.0.2",
-        "node-fetch": "2.6.7",
+        "node-fetch": "2.7.0",
         "tar": "^6.2.1",
         "yauzl": "^2.10.0",
         "shelljs": "^0.8.4"
