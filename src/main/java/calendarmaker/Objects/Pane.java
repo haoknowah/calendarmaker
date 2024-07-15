@@ -79,6 +79,10 @@ public class Pane extends JPanel{
 		tendo = new JScrollPane(table);
 		add(tendo);
 	}
+	/**
+	 * @param @input x = selected size of cell based on font size
+	 * sets preferred size of columns based on font size
+	 */
 	public void setCellSize(int x)
 	{
 		table.getColumnModel().setColumnMargin(0);
@@ -91,6 +95,12 @@ public class Pane extends JPanel{
 		}
 		tendo.setPreferredSize(new Dimension(x*7, x*table.getRowCount()+table.getTableHeader().getPreferredSize().height+5));
 	}
+	/**
+	 * @param imp = DOMImplementation object for getting svg dom
+	 * @param s = SVG namespace uri
+	 * @param doc = temporary svg document to obtain graphics data to be painted
+	 * @param svgGen = SVGGraphics2D object containing graphics info for svg visuals
+	 */
 	public void paintTable()
 	{
 		DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
@@ -103,6 +113,16 @@ public class Pane extends JPanel{
 	{
 		return this.table;
 	}
+	/**
+	 * @param imp = DOMImplementation object for getting svg dom
+	 * @param s = SVG namespace uri
+	 * @param doc = temporary svg document to obtain graphics data to be painted
+	 * @param svgGen = SVGGraphics2D object containing graphics info for svg visuals
+	 * @param ss = filepath chosen using @method findFile
+	 * @param out = OutputStreamWriter object for streaming data to svg file
+	 * @throws IOException
+	 * creates an svg file and saves created image to it
+	 */
 	public void getSVG() throws IOException
 	{
 		DOMImplementation imp = SVGDOMImplementation.getDOMImplementation();
@@ -116,6 +136,13 @@ public class Pane extends JPanel{
 		out.flush();
 		out.close();
 	}
+	/**
+	 * @param image = BufferedImage object containing image of created calendar
+	 * @param gjpg = Graphics2D object created from @param image
+	 * @param file = jpg file image is saved to
+	 * @throws IOException
+	 * saves created calendar to jpg file 
+	 */
 	public void getJPG() throws IOException
 	{
 		BufferedImage image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -124,6 +151,21 @@ public class Pane extends JPanel{
 		File file = findJPGFile();
 		ImageIO.write(image, "jpg", file);
 	}
+	/**
+	 * @param file = selected file to view
+	 * @param imp = DOMImplementation object for the svg dom
+	 * @param fact = SAXSVGDocumentFactory for creating SVGDocument from @param file
+	 * @param canvas = JSVGCanvas object for displaying loaded svg file
+	 * @param doc = SVGDocument from selected @param file
+	 * @param g = SVGGraphics2D from @param doc
+	 * @param frame = JFrame for displaying selected svg
+	 * @param root = root element of @param doc
+	 * @param image = BufferedImage from selected jpg file
+	 * @param im = jpg to be displayed
+	 * @return g = graphics of selected file
+	 * @throws IOException
+	 * finds and displays an svg specified by the user
+	 */
 	public static Graphics2D viewSVG() throws IOException
 	{
 		File file = loadFile();
@@ -240,6 +282,14 @@ public class Pane extends JPanel{
 			return null;
 		}
 	}
+	/**
+	 * @param find = JFileChooser object
+	 * @param result = determines approval status of selected file
+	 * @param write = FileWriter object for creating and writing to selected file if it does not exist
+	 * @return file selected by the user
+	 * different from above as this one is specifically for opening an already created file as the showSaveDialog method does not
+	 * allow custom input names to create a new file on mac
+	 */
 	public static File loadFile()
 	{
 		JFileChooser find = new JFileChooser();
