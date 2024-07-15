@@ -100,27 +100,26 @@ public class Window extends JFrame implements ActionListener{
 			}
 			break;
 		case "SVG":
+			/**
+			 * @param yub = Pane object for saving the created calendar
+			 * extracts calendar creation data then saves to svg
+			 */
 			try
 			{
-				JFrame f = new JFrame();
 				Pane yub = this.menu.getPane();
-				f.add(yub);
-				f.pack();
-				f.setLocationRelativeTo(null);
-				f.setVisible(true);
 				yub.getSVG();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			break;
 		case "JPG":
+			/**
+			 * @param yub = read above documentation
+			 * @param image
+			 */
 			try
 			{
-				JFrame f = new JFrame();
 				Pane yub = this.menu.getPane();
-				f.add(yub);
-				f.pack();
-				f.setLocationRelativeTo(null);
 				BufferedImage image = new BufferedImage(yub.getWidth(), yub.getHeight(), BufferedImage.TYPE_INT_RGB);
 				Graphics2D gjpg = image.createGraphics();
 				yub.paint(gjpg);
