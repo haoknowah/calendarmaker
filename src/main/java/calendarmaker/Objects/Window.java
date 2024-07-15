@@ -115,7 +115,10 @@ public class Window extends JFrame implements ActionListener{
 		case "JPG":
 			/**
 			 * @param yub = read above documentation
-			 * @param image
+			 * @param image = BufferedImage of jpg to be saved
+			 * @param gjpg = Graphics2D object from @param image
+			 * @param file = File object for jpg image
+			 * creates jpg file from @param image's created graphics 
 			 */
 			try
 			{
@@ -132,6 +135,9 @@ public class Window extends JFrame implements ActionListener{
 			}
 		}
 	}
+	/** 
+	 * @return menu object
+	 */
 	public Menu getMenu()
 	{
 		return this.menu;

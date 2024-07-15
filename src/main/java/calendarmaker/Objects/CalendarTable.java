@@ -8,7 +8,8 @@ import javax.swing.table.AbstractTableModel;
 @SuppressWarnings("serial")
 public class CalendarTable extends AbstractTableModel{
 	/**
-	 * 
+	 * @param days = array of days for column headers
+	 * @param calendar = Calendar object for table
 	 */
 	private String[] days = 
 		{
@@ -36,6 +37,10 @@ public class CalendarTable extends AbstractTableModel{
 		return 7;
 	}
 	@Override
+	/**
+	 * @param end = gets number of days in month plus extra days from anchor
+	 * @param @return rows = number of rows in table
+	 */
 	public int getRowCount()
 	{
 		int end = calendar.getStart().get(ChronoField.DAY_OF_WEEK) - 1 + calendar.getStart().lengthOfMonth();
@@ -52,6 +57,11 @@ public class CalendarTable extends AbstractTableModel{
 		return LocalDate.class;
 	}
 	@Override
+	/**
+	 * @param row = selected row
+	 * @param column = selected column
+	 * @return LocalDate in selected row and column
+	 */
 	public Object getValueAt(int row, int column)
 	{
 		int offset = (row * 7) + column;

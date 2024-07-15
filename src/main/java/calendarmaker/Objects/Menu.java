@@ -22,7 +22,15 @@ import javax.swing.border.TitledBorder;
 public class Menu extends JPanel implements ActionListener{
 
 	/**
-	 * 
+	 * @param fontSize = JTextField object containing desired font size
+	 * @param avai = array of available fonts
+	 * @param dropdown = JComboBox containing available fonts
+	 * @param showOut = JComboBox deciding whether or not to show dates outside of the month
+	 * @param circle = JComboBox deciding whether or not to circle dates
+	 * @param month = JComboBox deciding the selected month 
+	 * @param year = JTextField containing desired year
+	 * @param color = JTextField containing desired color
+	 * @param grid = JComboBox deciding whether or not to show grid lines
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField fontSize;
@@ -34,6 +42,12 @@ public class Menu extends JPanel implements ActionListener{
 	private JTextField year;
 	private JTextField color;
 	private JComboBox<Boolean> grid;
+	/**
+	 * @param fonts = array containing names of available fonts
+	 * @param con = GridBagConstraints object for formatting Menu object
+	 * @param enter = JButton for activating ActionListener
+	 * constructor for building and formatting Menu object
+	 */
 	public Menu()
 	{
 		GridBagConstraints con = new GridBagConstraints();
@@ -99,6 +113,11 @@ public class Menu extends JPanel implements ActionListener{
 		add(enter, con);
 	}
 	@Override
+	/**
+	 * @param @input e = ActionEvent performed
+	 * @param s = string containing command of @param e
+	 * triggers @method enter when button is pressed
+	 */
 	public void actionPerformed(ActionEvent e) {
 		String s = e.getActionCommand();
 		if(s.equalsIgnoreCase("enter"))
@@ -108,6 +127,15 @@ public class Menu extends JPanel implements ActionListener{
 	}
 	public void enter()
 	{
+		/**
+		 * @param sel = font from @param dropDown
+		 * @param font = font created from @param sel and @param fontSize
+		 * @param f = JFrame containing created calendar
+		 * @param yub = Pane object created from input information
+		 * @param table = table from @param yub
+		 * @param bord = TitledBorder object from @param yub
+		 * creates Pane object by calling @method getPane and displays it in a JFrame
+		 */
 		try
 		{
 			Font sel = avai[this.dropDown.getSelectedIndex()];
@@ -125,6 +153,11 @@ public class Menu extends JPanel implements ActionListener{
 			f.setLocationRelativeTo(null);
 			f.setVisible(true);
 		}
+		/**
+		 * @param f = JFrame for message
+		 * @param j = JLabel containing warning
+		 * creates JFrame giving error warning
+		 */
 		catch(Exception e)
 		{
 			JFrame f = new JFrame("Error");
@@ -138,6 +171,14 @@ public class Menu extends JPanel implements ActionListener{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * @param year = user input year from @param year
+	 * @param month = user input month from @param month
+	 * @param fontSize = user input font size
+	 * @param sel = font selected from @param dropDown
+	 * @param font = font created from @param sel and @param fontSize
+	 * @return yub = Pane object created from above parameters
+	 */
 	public Pane getPane()
 	{
 		try

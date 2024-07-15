@@ -36,8 +36,25 @@ import org.w3c.dom.svg.SVGDocument;
 
 @SuppressWarnings("serial")
 public class Pane extends JPanel{
+	/**
+	 * @param table = JTable of the calendar
+	 * @param tendo = JScrollPane object that is apparently necessary to display column headers
+	 */
 	private JTable table;
 	private JScrollPane tendo;
+	/**
+	 * @param @input year = selected year
+	 * @param @input month = selected month
+	 * @param @input showOut = boolean determining whether or not to show dates outside of @param month
+	 * @param @input circle = boolean determining whether or not to circle dates
+	 * @param @input color = selected color for calendar
+	 * @param @input grid = boolean determining whether or not to show grid lines
+	 * @param calendar = calendar object for @param table
+	 * @param bord = TitledBorder object for displaying selected month of calendar
+	 * @param rend = TableCellRenderer of table header
+	 * @param head = JLabel for column headers so they can be centered on macs
+	 * constructor that builds calendar table based on input parameters
+	 */
 	public Pane(int year, Month month, boolean showOut, boolean circle, Color color, boolean grid)
 	{
 		Calendar calendar = new Calendar(year, month);
