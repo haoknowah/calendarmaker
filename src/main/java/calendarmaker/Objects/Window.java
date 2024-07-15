@@ -19,11 +19,15 @@ import javax.swing.JPanel;
 public class Window extends JFrame implements ActionListener{
 
 	/**
-	 * 
+	 * @param win = Jpanel containing the menu actions
+	 * @param menu = Menu object for creating the calendar
+	 * @param @input title = string representing the title on the window
+	 * @param save = JButton for performing the save action
+	 * @param load = JButton for performing the load action
+	 * constructor builds JFrame for app, sets a box layout, and then adds Menu panel and then @param win panel beneath the Menu
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel win;
-	private Pane yub;
 	private Menu menu;
 	public Window(String title)
 	{
@@ -40,12 +44,23 @@ public class Window extends JFrame implements ActionListener{
 		win.add(load);
 		add(win);
 	}
+	/**
+	 * @param @input e = ActionEvent triggered by the save or load of a calendar
+	 * @param s = ActionCommand performed 
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s = e.getActionCommand();
 		switch(s)
 		{
 		case "Save":
+			/**
+			 * @param f = JFrame for asking image file type
+			 * @param panel = panel holding prompt and buttons
+			 * @param svg = button for saving as svg
+			 * @param jpg = button for saving as jpg
+			 * creates a window to ask what file type the image needs to be saved as and activates the corresponding event
+			 */
 			try
 			{
 				JFrame f = new JFrame();
@@ -68,6 +83,11 @@ public class Window extends JFrame implements ActionListener{
 			}
 			break;
 		case "Load":
+			/**
+			 * @param yub = Pane object for calling viewSVG method and displaying it
+			 * @param g = Graphics2D object for painting @param yub
+			 * loads and displays selected svg or jpg
+			 */
 			try
 			{
 				Pane yub = this.menu.getPane();
@@ -112,10 +132,6 @@ public class Window extends JFrame implements ActionListener{
 				e23.printStackTrace();
 			}
 		}
-	}
-	public Pane getYub()
-	{
-		return this.yub;
 	}
 	public Menu getMenu()
 	{
