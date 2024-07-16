@@ -41,6 +41,7 @@
 		    <configuration>
 		        <mainClass>Meow</mainClass>
 		        <iconFile>icon.png</iconFile>
+		        <generateDiskImageFile>true</generateDiskImageFile>
 		    </configuration>
 		    <executions>
 		        <execution>
