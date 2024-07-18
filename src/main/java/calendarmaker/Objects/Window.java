@@ -106,7 +106,11 @@ public class Window extends JFrame implements ActionListener{
 			 */
 			try
 			{
+				JFrame f = new JFrame();
 				Pane yub = this.menu.getPane();
+				f.add(yub);
+				f.pack();
+				f.setLocationRelativeTo(null);
 				yub.getSVG();
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -122,7 +126,11 @@ public class Window extends JFrame implements ActionListener{
 			 */
 			try
 			{
+				JFrame f = new JFrame();
 				Pane yub = this.menu.getPane();
+				f.add(yub);
+				f.pack();
+				f.setLocationRelativeTo(null);
 				BufferedImage image = new BufferedImage(yub.getWidth(), yub.getHeight(), BufferedImage.TYPE_INT_RGB);
 				Graphics2D gjpg = image.createGraphics();
 				yub.paint(gjpg);
