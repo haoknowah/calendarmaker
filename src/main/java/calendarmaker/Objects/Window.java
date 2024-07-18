@@ -101,6 +101,7 @@ public class Window extends JFrame implements ActionListener{
 			break;
 		case "SVG":
 			/**
+			 * @param f = JFrame for holding image
 			 * @param yub = Pane object for saving the created calendar
 			 * extracts calendar creation data then saves to svg
 			 */
@@ -118,6 +119,7 @@ public class Window extends JFrame implements ActionListener{
 			break;
 		case "JPG":
 			/**
+			 * @param f = JFrame for holding image
 			 * @param yub = read above documentation
 			 * @param image = BufferedImage of jpg to be saved
 			 * @param gjpg = Graphics2D object from @param image
