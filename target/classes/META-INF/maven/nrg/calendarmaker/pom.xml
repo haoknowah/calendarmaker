@@ -7,6 +7,7 @@
   <properties>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <build>
   	<plugins>
@@ -71,6 +72,12 @@
 	<dependency>
 	    <groupId>org.apache.xmlgraphics</groupId>
 	    <artifactId>batik-svggen</artifactId>
+	    <version>1.17</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-codec -->
+	<dependency>
+	    <groupId>org.apache.xmlgraphics</groupId>
+	    <artifactId>batik-codec</artifactId>
 	    <version>1.17</version>
 	</dependency>
   	<!-- https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-dom -->

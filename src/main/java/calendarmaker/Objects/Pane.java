@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.Writer;
 import java.time.LocalDate;
 import java.time.Month;
@@ -23,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JViewport;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellRenderer;
 
@@ -56,9 +60,12 @@ public class Pane extends JPanel{
 				TitledBorder.TOP, TitledBorder.CENTER);
 		this.setBorder(bord);
 		table.setShowGrid(grid);
+		table.setGridColor(color);
 		tendo = new JScrollPane(table);
+		TableCellRenderer rend = table.getTableHeader().getDefaultRenderer();
+		JLabel head = (JLabel) rend;
+		head.setHorizontalAlignment(JLabel.CENTER);
 		add(tendo);
-		//add(table); works except doesn't show header
 	}
 	public void setCellSize(int x)
 	{
@@ -70,7 +77,7 @@ public class Pane extends JPanel{
 			table.getColumnModel().getColumn(i).setMinWidth(2);
 			table.getColumnModel().getColumn(i).setMaxWidth(x);
 		}
-		tendo.setPreferredSize(new Dimension(x*7, x*table.getRowCount()+table.getTableHeader().getPreferredSize().height+3));
+		tendo.setPreferredSize(new Dimension(x*7, x*table.getRowCount()+table.getTableHeader().getPreferredSize().height+6));
 	}
 	public void paintTable()
 	{
