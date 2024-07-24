@@ -129,7 +129,7 @@ public class Pane extends JPanel{
 		String s = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		SVGDocument doc = (SVGDocument) imp.createDocument(s, "svg", null);
 		SVGGraphics2D svgGen = new SVGGraphics2D(doc);
-		String ss = findFile().getAbsolutePath();
+		String ss = findFile(0).getAbsolutePath();
 		Writer out = new OutputStreamWriter(new FileOutputStream(new File(ss)), "UTF-8");
 		this.paint(svgGen);
 		svgGen.stream(out, true);
@@ -194,7 +194,8 @@ public class Pane extends JPanel{
 			frame.setVisible(true);
 			return g;
 		}
-		else if(file.getAbsolutePath().substring(file.getAbsolutePath().length() - 4).equals(".jpg"))
+		else if(file.getAbsolutePath().substring(file.getAbsolutePath().length() - 4).equals(".jpg") ||
+				file.getAbsolutePath().substring(file.getAbsolutePath().length() - 4).equals(".png"))
 		{
 			BufferedImage image = ImageIO.read(file);
 			JFrame frame = new JFrame();
@@ -249,7 +250,7 @@ public class Pane extends JPanel{
 	 * @param@return file = file selected by user
 	 * uses JFileChooser to allow user to select a file and then return the file if it is valid or null if it is not
 	 */
-	public static File findFile()
+	public static File findFile(int type)
 	{
 		JFileChooser find = new JFileChooser();
 		find.setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -258,10 +259,20 @@ public class Pane extends JPanel{
 		{
 			find.approveSelection();
 			try {
-				Writer write = new FileWriter(find.getSelectedFile().getPath() + ".svg");
-				write.flush();
-				write.close();
-				find.setSelectedFile(new File(find.getSelectedFile().getPath() + ".svg"));
+				if(type == 0)
+				{
+					Writer write = new FileWriter(find.getSelectedFile().getPath() + ".svg");
+					write.flush();
+					write.close();
+					find.setSelectedFile(new File(find.getSelectedFile().getPath() + ".svg"));
+				}
+				if(type == 1)
+				{
+					Writer write = new FileWriter(find.getSelectedFile().getPath() + ".png");
+					write.flush();
+					write.close();
+					find.setSelectedFile(new File(find.getSelectedFile().getPath() + ".png"));
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

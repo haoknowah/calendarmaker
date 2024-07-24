@@ -72,8 +72,12 @@ public class Window extends JFrame implements ActionListener{
 				JButton jpg = new JButton("JPG");
 				jpg.addActionListener(this);
 				jpg.addActionListener(c -> {f.dispose();});
+				JButton png = new JButton("PNG");
+				png.addActionListener(this);
+				png.addActionListener(c -> {f.dispose();});
 				panel.add(svg);
 				panel.add(jpg);
+				panel.add(png);
 				f.add(panel);
 				f.pack();
 				f.setLocationRelativeTo(null);
@@ -142,6 +146,25 @@ public class Window extends JFrame implements ActionListener{
 			catch(Exception e23)
 			{
 				e23.printStackTrace();
+			}
+			break;
+		case "PNG":
+			try
+			{
+				JFrame f = new JFrame();
+				Pane yub = this.menu.getPane();
+				f.add(yub);
+				f.pack();
+				f.setLocationRelativeTo(null);
+				BufferedImage image = new BufferedImage(yub.getWidth(), yub.getHeight(), BufferedImage.TYPE_INT_RGB);
+				Graphics2D gpng = image.createGraphics();
+				yub.paint(gpng);
+				File file = Pane.findFile(1);
+				ImageIO.write(image, "png", file);
+			}
+			catch(IOException e1)
+			{
+				e1.printStackTrace();
 			}
 		}
 	}

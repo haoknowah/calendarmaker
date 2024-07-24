@@ -191,6 +191,7 @@ public class Menu extends JPanel implements ActionListener{
 			Pane yub = new Pane(year, month, (boolean) this.showOut.getSelectedItem(), (boolean) this.circle.getSelectedItem(),
 					(Color) Color.class.getField(color.getText()).get(null), (boolean) this.grid.getSelectedItem());
 			yub.setFont(font);
+			yub.getJTable().setFont(font);
 			yub.getJTable().getTableHeader().setFont(new Font(font.getFontName(), font.getStyle(), fontSize-2));
 			yub.getJTable().getTableHeader().setForeground((Color) Color.class.getField(color.getText()).get(null));
 			yub.setCellSize((fontSize+2)*2);
