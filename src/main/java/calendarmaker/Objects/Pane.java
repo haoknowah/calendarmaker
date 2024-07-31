@@ -55,7 +55,7 @@ public class Pane extends JPanel{
 	 * @param head = JLabel for column headers so they can be centered on macs
 	 * constructor that builds calendar table based on input parameters
 	 */
-	public Pane(int year, Month month, boolean showOut, boolean circle, Color color, boolean grid)
+	public Pane(int year, Month month, boolean showOut, boolean circle, Color color, boolean grid, int circThick)
 	{
 		Calendar calendar = new Calendar(year, month);
 		table = new JTable(new CalendarTable(calendar))
@@ -67,7 +67,7 @@ public class Pane extends JPanel{
 						return renderer;
 					}
 				};
-		table.setDefaultRenderer(LocalDate.class, new Renderer(calendar, showOut, circle, color));
+		table.setDefaultRenderer(LocalDate.class, new Renderer(calendar, showOut, circle, color, circThick));
 		TitledBorder bord = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), month.toString(),
 				TitledBorder.TOP, TitledBorder.CENTER);
 		this.setBorder(bord);

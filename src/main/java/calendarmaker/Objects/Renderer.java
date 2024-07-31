@@ -1,8 +1,10 @@
 package calendarmaker.Objects;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -26,12 +28,14 @@ public class Renderer extends DefaultTableCellRenderer{
 	private boolean circle;
 	private boolean withinBounds;
 	private Color color;
-	public Renderer(Calendar calendar, boolean showOut, boolean circle, Color color)
+	private int circThick;
+	public Renderer(Calendar calendar, boolean showOut, boolean circle, Color color, int circThick)
 	{
 		this.calendar = calendar;
 		this.showOut = showOut;
 		this.circle = circle;
 		this.color = color;
+		this.circThick = circThick;
 		setHorizontalAlignment(JLabel.CENTER);
 	}
 	@Override
@@ -79,7 +83,9 @@ public class Renderer extends DefaultTableCellRenderer{
 		super.paintComponent(g);
 		if(circle && (withinBounds || showOut))
 		{
-			g.drawOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setStroke(new BasicStroke(circThick));
+			g2.drawOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
 		}
 	}
 	

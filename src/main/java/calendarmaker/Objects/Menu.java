@@ -42,6 +42,7 @@ public class Menu extends JPanel implements ActionListener{
 	private JTextField year;
 	private JTextField color;
 	private JComboBox<Boolean> grid;
+	private JTextField circThick;
 	/**
 	 * @param fonts = array containing names of available fonts
 	 * @param con = GridBagConstraints object for formatting Menu object
@@ -71,6 +72,8 @@ public class Menu extends JPanel implements ActionListener{
 		dropDown = new JComboBox<>(fonts);
 		color = new JTextField(12);
 		color.setText("BLACK");
+		circThick = new JTextField(2);
+		circThick.setText("1");
 		con.fill = GridBagConstraints.HORIZONTAL;
 		con.gridx = 0;
 		con.gridy = 0;
@@ -109,6 +112,11 @@ public class Menu extends JPanel implements ActionListener{
 		add(grid, con);
 		con.gridx = 0;
 		con.gridy = 8;
+		add(new JLabel("Circle Thickness"), con);
+		con.gridx = 1;
+		add(circThick, con);
+		con.gridx = 0;
+		con.gridy = 9;
 		con.gridwidth = 2;
 		add(enter, con);
 	}
@@ -189,7 +197,8 @@ public class Menu extends JPanel implements ActionListener{
 			Font sel = avai[this.dropDown.getSelectedIndex()];
 			Font font = new Font(sel.getFontName(), sel.getStyle(), fontSize);
 			Pane yub = new Pane(year, month, (boolean) this.showOut.getSelectedItem(), (boolean) this.circle.getSelectedItem(),
-					(Color) Color.class.getField(color.getText()).get(null), (boolean) this.grid.getSelectedItem());
+					(Color) Color.class.getField(color.getText()).get(null), (boolean) this.grid.getSelectedItem(), 
+					Integer.parseInt(this.circThick.getText()));
 			yub.setFont(font);
 			yub.getJTable().setFont(font);
 			yub.getJTable().getTableHeader().setFont(new Font(font.getFontName(), font.getStyle(), fontSize-2));
