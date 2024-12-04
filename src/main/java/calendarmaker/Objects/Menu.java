@@ -153,7 +153,8 @@ public class Menu extends JPanel implements ActionListener{
 			JTable table = yub.getJTable();
 			table.setFont(font);
 			TitledBorder bord = (TitledBorder) yub.getBorder();
-			bord.setTitleFont(font);
+			Font title = new Font(font.getFontName(), font.getStyle(), (int) (font.getSize() * 1.25));
+			bord.setTitleFont(title);
 			bord.setTitleColor((Color) Color.class.getField(color.getText()).get(null));
 			yub.setBorder(bord);
 			f.add(yub);
@@ -203,7 +204,7 @@ public class Menu extends JPanel implements ActionListener{
 			yub.getJTable().setFont(font);
 			yub.getJTable().getTableHeader().setFont(new Font(font.getFontName(), font.getStyle(), fontSize-2));
 			yub.getJTable().getTableHeader().setForeground((Color) Color.class.getField(color.getText()).get(null));
-			yub.setCellSize((fontSize+2)*2);
+			yub.setCellSize((int)((fontSize+2)*1.5));
 			return yub;
 		}
 		catch(Exception e)

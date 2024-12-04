@@ -71,7 +71,8 @@ public class Pane extends JPanel{
 		table.setDefaultRenderer(LocalDate.class, new Renderer(calendar, showOut, circle, color, circThick));
 		TitledBorder bord = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), month.toString(),
 				TitledBorder.TOP, TitledBorder.CENTER);
-		bord.setTitleFont(font);
+		Font title = new Font(font.getFontName(), font.getStyle(), (int) (font.getSize() * 1.25));
+		bord.setTitleFont(title);
 		this.setBorder(bord);
 		table.setShowGrid(grid);
 		table.setGridColor(color);
