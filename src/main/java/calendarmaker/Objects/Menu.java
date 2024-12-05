@@ -43,6 +43,7 @@ public class Menu extends JPanel implements ActionListener{
 	private JTextField color;
 	private JComboBox<Boolean> grid;
 	private JTextField circThick;
+	private JTextField heightChange;
 	/**
 	 * @param fonts = array containing names of available fonts
 	 * @param con = GridBagConstraints object for formatting Menu object
@@ -74,6 +75,8 @@ public class Menu extends JPanel implements ActionListener{
 		color.setText("BLACK");
 		circThick = new JTextField(2);
 		circThick.setText("1");
+		heightChange = new JTextField(4);
+		heightChange.setText("0");
 		con.fill = GridBagConstraints.HORIZONTAL;
 		con.gridx = 0;
 		con.gridy = 0;
@@ -117,6 +120,11 @@ public class Menu extends JPanel implements ActionListener{
 		add(circThick, con);
 		con.gridx = 0;
 		con.gridy = 9;
+		add(new JLabel("Chnage in cell height"), con);
+		con.gridx = 1;
+		add(heightChange, con);
+		con.gridx = 0;
+		con.gridy = 10;
 		con.gridwidth = 2;
 		add(enter, con);
 	}
@@ -204,7 +212,7 @@ public class Menu extends JPanel implements ActionListener{
 			yub.getJTable().setFont(font);
 			yub.getJTable().getTableHeader().setFont(new Font(font.getFontName(), font.getStyle(), fontSize-2));
 			yub.getJTable().getTableHeader().setForeground((Color) Color.class.getField(color.getText()).get(null));
-			yub.setCellSize((int)((fontSize+2)*1.5));
+			yub.setCellSize((int)((fontSize+2)*1.5), Integer.parseInt(this.heightChange.getText()));
 			return yub;
 		}
 		catch(Exception e)

@@ -86,17 +86,17 @@ public class Pane extends JPanel{
 	 * @param @input x = selected size of cell based on font size
 	 * sets preferred size of columns based on font size
 	 */
-	public void setCellSize(int x)
+	public void setCellSize(int x, int heightChange)
 	{
 		table.getColumnModel().setColumnMargin(0);
-		table.setRowHeight(x);
+		table.setRowHeight(x + heightChange);
 		for(int i = 0; i < 7; i++)
 		{
 			table.getColumnModel().getColumn(i).setPreferredWidth(x);
 			table.getColumnModel().getColumn(i).setMinWidth(2);
 			table.getColumnModel().getColumn(i).setMaxWidth(x);
 		}
-		tendo.setPreferredSize(new Dimension(x*7, x*table.getRowCount()+table.getTableHeader().getPreferredSize().height+5));
+		tendo.setPreferredSize(new Dimension(x*7, (x + heightChange)*table.getRowCount()+table.getTableHeader().getPreferredSize().height+5));
 	}
 	/**
 	 * @param imp = DOMImplementation object for getting svg dom
